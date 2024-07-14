@@ -274,8 +274,13 @@ namespace nokachit
                             }
                         }
                         // テキストノート
-                        if (1 == nostrEvent.Kind)
+                        if (1 == nostrEvent.Kind || 42 == nostrEvent.Kind)
                         {
+                            if (42 == nostrEvent.Kind)
+                            {
+                                headMark = "=";
+                            }
+
                             var userClient = nostrEvent.GetTaggedData("client");
                             var iSnokakoi = -1 < Array.IndexOf(userClient, "nokakoi");
 
@@ -295,11 +300,12 @@ namespace nokachit
                             // ユーザー表示名取得（ユーザー辞書メモリ節約のため↑のフラグ処理後に）
                             string userName = GetUserName(nostrEvent.PublicKey);
 
+                            bool isSole = false;
                             foreach (SoleGhost soleGhost in _soleGhosts)
                             {
                                 if (soleGhost.Npub == nostrEvent.PublicKey.ConvertToNpub())
                                 {
-                                    userName = string.Empty;
+                                    isSole = true;
                                     break;
                                 }
                             }
@@ -343,20 +349,17 @@ namespace nokachit
                                     { "Reference5", user?.Picture ?? string.Empty }, // picture
                                     { "Reference6", nevent }, // nevent1...
                                     { "Reference7", nostrEvent.PublicKey.ConvertToNpub() }, // npub1...
-                                    { "Script", $"{speaker}{userName}\\n{msg}\\e" }
+                                    { "Script", $"{speaker}{(isSole ? "" : userName)}\\n{msg}\\e" }
                                 };
                                 string sstpmsg = _SSTPMethod + "\r\n" + string.Join("\r\n", SSTPHeader.Select(kvp => kvp.Key + ": " + kvp.Value.Replace("\n", "\\n"))) + "\r\n\r\n";
 
                                 string r;
-                                bool isSole = false;
-
                                 foreach (SoleGhost soleGhost in _soleGhosts)
                                 {
                                     if (soleGhost.Npub == nostrEvent.PublicKey.ConvertToNpub())
                                     {
                                         r = _ds.GetSSTPResponse(soleGhost.GhostName, sstpmsg);
                                         Debug.WriteLine(r);
-                                        isSole = true;
                                     }
                                 }
 
@@ -581,6 +584,8 @@ namespace nokachit
             Setting.Npub = _npub;
 
             Setting.Save(_configPath);
+
+            RefleshGhosts();
         }
         #endregion
 
@@ -726,29 +731,13 @@ namespace nokachit
             _ds.Dispose();      // FrmMsgReceiverのThread停止せず1000ms待たされるうえにプロセス残るので…
             Application.Exit(); // ←これで殺す。SSTLibに手を入れた方がいいが、とりあえず。
         }
+        #endregion
+
+        #region ロード時
         // ロード時
         private void FormMain_Load(object sender, EventArgs e)
         {
-            _soleGhosts = Tools.LoadSoleGhosts();
-            if (_soleGhosts.Count < 2)
-            {
-                while (_soleGhosts.Count < 2)
-                {
-                    _soleGhosts.Add(new SoleGhost());
-                }
-            }
-            if (null != _soleGhosts[0])
-            {
-                textBoxGhostNpub1.Text = _soleGhosts[0].Npub;
-                _formSetting.SearchGhost(comboBoxGhosts1, _soleGhosts[0].GhostName);
-                //_soleGhosts[0].GhostName = comboBoxGhosts1.Text;
-            }
-            if (null != _soleGhosts[1])
-            {
-                textBoxGhostNpub2.Text = _soleGhosts[1].Npub;
-                _formSetting.SearchGhost(comboBoxGhosts2, _soleGhosts[1].GhostName);
-                //_soleGhosts[1].GhostName = comboBoxGhosts2.Text;
-            }
+            RefleshGhosts();
             ButtonStart_Click(sender, e);
         }
         #endregion
@@ -802,24 +791,44 @@ namespace nokachit
         }
         #endregion
 
+        private void RefleshGhosts()
+        {
+            _soleGhosts = Tools.LoadSoleGhosts();
+            if (_soleGhosts.Count < 2)
+            {
+                while (_soleGhosts.Count < 2)
+                {
+                    _soleGhosts.Add(new SoleGhost());
+                }
+            }
+            textBoxGhostNpub1.Text = _soleGhosts[0].Npub;
+            _formSetting.SearchGhost(comboBoxGhosts1, _soleGhosts[0].GhostName);
+            textBoxGhostNpub2.Text = _soleGhosts[1].Npub;
+            _formSetting.SearchGhost(comboBoxGhosts2, _soleGhosts[1].GhostName);
+        }
+
         private void TextBoxGhostNpub1_TextChanged(object sender, EventArgs e)
         {
             _soleGhosts[0].Npub = textBoxGhostNpub1.Text;
+            Tools.SaveSoleGhosts(_soleGhosts);
         }
 
         private void TextBoxGhostNpub2_TextChanged(object sender, EventArgs e)
         {
             _soleGhosts[1].Npub = textBoxGhostNpub2.Text;
+            Tools.SaveSoleGhosts(_soleGhosts);
         }
 
         private void ComboBoxGhosts1_SelectionChangeCommitted(object sender, EventArgs e)
         {
             _soleGhosts[0].GhostName = comboBoxGhosts1.Text;
+            Tools.SaveSoleGhosts(_soleGhosts);
         }
 
-        private void comboBoxGhosts2_SelectionChangeCommitted(object sender, EventArgs e)
+        private void ComboBoxGhosts2_SelectionChangeCommitted(object sender, EventArgs e)
         {
             _soleGhosts[1].GhostName = comboBoxGhosts2.Text;
+            Tools.SaveSoleGhosts(_soleGhosts);
         }
     }
 }

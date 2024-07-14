@@ -135,7 +135,7 @@
             comboBoxGhosts2.Name = "comboBoxGhosts2";
             comboBoxGhosts2.Size = new Size(81, 23);
             comboBoxGhosts2.TabIndex = 9;
-            comboBoxGhosts2.SelectionChangeCommitted += comboBoxGhosts2_SelectionChangeCommitted;
+            comboBoxGhosts2.SelectionChangeCommitted += ComboBoxGhosts2_SelectionChangeCommitted;
             // 
             // textBoxGhostNpub1
             // 
