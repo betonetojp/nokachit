@@ -256,7 +256,7 @@ namespace nokachit
                                     _ds.Update();
                                     Dictionary<string, string> SSTPHeader = new(_baseSSTPHeader)
                                     {
-                                        { "Reference1", "7" }, // kind
+                                        { "Reference1", $"{nostrEvent.Kind}" }, // kind
                                         { "Reference2", content }, // content
                                         { "Reference3", user?.Name ?? "???" }, // name
                                         { "Reference4", user?.DisplayName ?? string.Empty }, // display_name
@@ -342,7 +342,7 @@ namespace nokachit
                                 }
                                 Dictionary<string, string> SSTPHeader = new(_baseSSTPHeader)
                                 {
-                                    { "Reference1", "1" },
+                                    { "Reference1", $"{nostrEvent.Kind}" },
                                     { "Reference2", content }, // content
                                     { "Reference3", user?.Name ?? "???" }, // name
                                     { "Reference4", user?.DisplayName ?? string.Empty }, // display_name

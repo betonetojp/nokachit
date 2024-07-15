@@ -163,7 +163,7 @@
             labelVersion.Name = "labelVersion";
             labelVersion.Size = new Size(37, 15);
             labelVersion.TabIndex = 0;
-            labelVersion.Text = "v0.0.2";
+            labelVersion.Text = "v0.0.3";
             // 
             // labelOpacity
             // 
