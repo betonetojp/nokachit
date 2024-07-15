@@ -15,6 +15,9 @@ https://github.com/betonetojp/noka
 
 ◆ 更新履歴
 
+2024/07/15 v0.0.4
+専用ゴーストだけにDirectSSTPを送信する設定を追加しました。
+
 2024/07/15 v0.0.3
 OnNostrイベントのReference1を正しく送信するように修正しました。
 

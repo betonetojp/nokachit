@@ -50,6 +50,7 @@ namespace nokachit
         };
 
         private string _ghostName = string.Empty;
+        private bool _soleGhostsOnly = false;
         // 重複イベントIDを保存するリスト
         private readonly LinkedList<string> _displayedEventIds = new();
         private List<SoleGhost> _soleGhosts = [new SoleGhost(), new SoleGhost()];
@@ -99,6 +100,7 @@ namespace nokachit
             }
             _showOnlyFollowees = Setting.ShowOnlyFollowees;
             _ghostName = Setting.Ghost;
+            _soleGhostsOnly = Setting.SoleGhostsOnly;
             _npub = Setting.Npub;
             try
             {
@@ -363,7 +365,7 @@ namespace nokachit
                                     }
                                 }
 
-                                if (!isSole)
+                                if (!isSole && !_soleGhostsOnly)
                                 {
                                     r = _ds.GetSSTPResponse(_ghostName, sstpmsg);
                                     Debug.WriteLine(r);
@@ -516,6 +518,7 @@ namespace nokachit
             _formSetting.checkBoxShowOnlyFollowees.Checked = _showOnlyFollowees;
             _formSetting.textBoxNpub.Text = _npub;
             _formSetting.textBoxPreferredGhost.Text = _ghostName;
+            _formSetting.checkBoxSoleGhostsOnly.Checked = _soleGhostsOnly;
 
             // 開く
             _formSetting.ShowDialog(this);
@@ -542,6 +545,7 @@ namespace nokachit
             _showOnlyFollowees = _formSetting.checkBoxShowOnlyFollowees.Checked;
             _ghostName = _formSetting.textBoxPreferredGhost.Text;
             _npub = _formSetting.textBoxNpub.Text;
+            _soleGhostsOnly = _formSetting.checkBoxSoleGhostsOnly.Checked;
             try
             {
                 // 別アカウントログイン失敗に備えてクリアしておく
@@ -581,6 +585,7 @@ namespace nokachit
             Setting.Opacity = Opacity;
             Setting.ShowOnlyFollowees = _showOnlyFollowees;
             Setting.Ghost = _ghostName;
+            Setting.SoleGhostsOnly = _soleGhostsOnly;
             Setting.Npub = _npub;
 
             Setting.Save(_configPath);
@@ -791,6 +796,23 @@ namespace nokachit
         }
         #endregion
 
+        private static void SearchGhost(ComboBox comboBox, string? ghost)
+        {
+            comboBox.Items.Clear();
+            SakuraFMO fmo = new("SakuraUnicode");
+            fmo.Update(true);
+            string[] names = fmo.GetGhostNames();
+            if (names.Length > 0)
+            {
+                comboBox.Items.AddRange(names);
+                comboBox.SelectedIndex = 0;
+                if (!string.IsNullOrEmpty(ghost))
+                {
+                    comboBox.SelectedItem = ghost;
+                }
+            }
+        }
+
         private void RefleshGhosts()
         {
             _soleGhosts = Tools.LoadSoleGhosts();
@@ -802,9 +824,9 @@ namespace nokachit
                 }
             }
             textBoxGhostNpub1.Text = _soleGhosts[0].Npub;
-            _formSetting.SearchGhost(comboBoxGhosts1, _soleGhosts[0].GhostName);
+            SearchGhost(comboBoxGhosts1, _soleGhosts[0].GhostName);
             textBoxGhostNpub2.Text = _soleGhosts[1].Npub;
-            _formSetting.SearchGhost(comboBoxGhosts2, _soleGhosts[1].GhostName);
+            SearchGhost(comboBoxGhosts2, _soleGhosts[1].GhostName);
         }
 
         private void TextBoxGhostNpub1_TextChanged(object sender, EventArgs e)

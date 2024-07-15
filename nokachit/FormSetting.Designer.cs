@@ -50,6 +50,7 @@
             buttonClear = new Button();
             label7 = new Label();
             label8 = new Label();
+            checkBoxSoleGhostsOnly = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)trackBarOpacity).BeginInit();
             SuspendLayout();
             // 
@@ -142,7 +143,7 @@
             linkLabelIcons8.Location = new Point(231, 237);
             linkLabelIcons8.Name = "linkLabelIcons8";
             linkLabelIcons8.Size = new Size(41, 15);
-            linkLabelIcons8.TabIndex = 11;
+            linkLabelIcons8.TabIndex = 12;
             linkLabelIcons8.TabStop = true;
             linkLabelIcons8.Text = "Icons8";
             linkLabelIcons8.LinkClicked += LinkLabelIcons8_LinkClicked;
@@ -163,7 +164,7 @@
             labelVersion.Name = "labelVersion";
             labelVersion.Size = new Size(37, 15);
             labelVersion.TabIndex = 0;
-            labelVersion.Text = "v0.0.3";
+            labelVersion.Text = "v0.0.4";
             // 
             // labelOpacity
             // 
@@ -259,11 +260,22 @@
             label8.TabIndex = 0;
             label8.Text = "Preferred";
             // 
+            // checkBoxSoleGhostsOnly
+            // 
+            checkBoxSoleGhostsOnly.AutoSize = true;
+            checkBoxSoleGhostsOnly.Location = new Point(12, 207);
+            checkBoxSoleGhostsOnly.Name = "checkBoxSoleGhostsOnly";
+            checkBoxSoleGhostsOnly.Size = new Size(190, 19);
+            checkBoxSoleGhostsOnly.TabIndex = 11;
+            checkBoxSoleGhostsOnly.Text = "Send DSSTP to sole ghosts only";
+            checkBoxSoleGhostsOnly.UseVisualStyleBackColor = true;
+            // 
             // FormSetting
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(284, 261);
+            Controls.Add(checkBoxSoleGhostsOnly);
             Controls.Add(label8);
             Controls.Add(label7);
             Controls.Add(buttonClear);
@@ -326,5 +338,7 @@
         private Label label7;
         private Label label8;
         internal TextBox textBoxPreferredGhost;
+        internal CheckBox checkBoxSoleGhostsOnly;
+        private CheckBox checkBox1;
     }
 }

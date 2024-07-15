@@ -54,7 +54,7 @@ namespace nokachit
             textBoxPreferredGhost.Text = string.Empty;
         }
 
-        internal void SearchGhost()
+        private void SearchGhost()
         {
             comboBoxGhosts.Items.Clear();
             SakuraFMO fmo = new("SakuraUnicode");
@@ -67,23 +67,6 @@ namespace nokachit
                 if (!string.IsNullOrEmpty(textBoxPreferredGhost.Text))
                 {
                     comboBoxGhosts.SelectedItem = textBoxPreferredGhost.Text;
-                }
-            }
-        }
-
-        internal void SearchGhost(ComboBox comboBox, string? ghost)
-        {
-            comboBox.Items.Clear();
-            SakuraFMO fmo = new("SakuraUnicode");
-            fmo.Update(true);
-            string[] names = fmo.GetGhostNames();
-            if (names.Length > 0)
-            {
-                comboBox.Items.AddRange(names);
-                comboBox.SelectedIndex = 0;
-                if (!string.IsNullOrEmpty(ghost))
-                {
-                    comboBox.SelectedItem = ghost;
                 }
             }
         }
