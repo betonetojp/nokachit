@@ -37,10 +37,6 @@
             buttonRelayList = new Button();
             labelRelays = new Label();
             toolTipRelays = new ToolTip(components);
-            comboBoxGhosts1 = new ComboBox();
-            comboBoxGhosts2 = new ComboBox();
-            textBoxGhostNpub1 = new TextBox();
-            textBoxGhostNpub2 = new TextBox();
             SuspendLayout();
             // 
             // buttonStart
@@ -65,7 +61,7 @@
             textBoxTimeline.Name = "textBoxTimeline";
             textBoxTimeline.ReadOnly = true;
             textBoxTimeline.ScrollBars = ScrollBars.Vertical;
-            textBoxTimeline.Size = new Size(280, 170);
+            textBoxTimeline.Size = new Size(280, 228);
             textBoxTimeline.TabIndex = 5;
             textBoxTimeline.TabStop = false;
             textBoxTimeline.MouseEnter += TextBoxTimeline_MouseEnter;
@@ -115,63 +111,11 @@
             labelRelays.TabIndex = 0;
             labelRelays.Text = "Relay info";
             // 
-            // comboBoxGhosts1
-            // 
-            comboBoxGhosts1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            comboBoxGhosts1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxGhosts1.FormattingEnabled = true;
-            comboBoxGhosts1.Location = new Point(211, 217);
-            comboBoxGhosts1.Name = "comboBoxGhosts1";
-            comboBoxGhosts1.Size = new Size(81, 23);
-            comboBoxGhosts1.TabIndex = 7;
-            comboBoxGhosts1.SelectionChangeCommitted += ComboBoxGhosts1_SelectionChangeCommitted;
-            // 
-            // comboBoxGhosts2
-            // 
-            comboBoxGhosts2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            comboBoxGhosts2.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxGhosts2.FormattingEnabled = true;
-            comboBoxGhosts2.Location = new Point(211, 246);
-            comboBoxGhosts2.Name = "comboBoxGhosts2";
-            comboBoxGhosts2.Size = new Size(81, 23);
-            comboBoxGhosts2.TabIndex = 9;
-            comboBoxGhosts2.SelectionChangeCommitted += ComboBoxGhosts2_SelectionChangeCommitted;
-            // 
-            // textBoxGhostNpub1
-            // 
-            textBoxGhostNpub1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            textBoxGhostNpub1.BorderStyle = BorderStyle.FixedSingle;
-            textBoxGhostNpub1.ImeMode = ImeMode.Disable;
-            textBoxGhostNpub1.Location = new Point(12, 217);
-            textBoxGhostNpub1.MaxLength = 136;
-            textBoxGhostNpub1.Name = "textBoxGhostNpub1";
-            textBoxGhostNpub1.PlaceholderText = "npub1 . . .";
-            textBoxGhostNpub1.Size = new Size(193, 23);
-            textBoxGhostNpub1.TabIndex = 6;
-            textBoxGhostNpub1.TextChanged += TextBoxGhostNpub1_TextChanged;
-            // 
-            // textBoxGhostNpub2
-            // 
-            textBoxGhostNpub2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            textBoxGhostNpub2.BorderStyle = BorderStyle.FixedSingle;
-            textBoxGhostNpub2.ImeMode = ImeMode.Disable;
-            textBoxGhostNpub2.Location = new Point(12, 247);
-            textBoxGhostNpub2.MaxLength = 136;
-            textBoxGhostNpub2.Name = "textBoxGhostNpub2";
-            textBoxGhostNpub2.PlaceholderText = "npub1 . . .";
-            textBoxGhostNpub2.Size = new Size(193, 23);
-            textBoxGhostNpub2.TabIndex = 8;
-            textBoxGhostNpub2.TextChanged += TextBoxGhostNpub2_TextChanged;
-            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(304, 281);
-            Controls.Add(textBoxGhostNpub2);
-            Controls.Add(textBoxGhostNpub1);
-            Controls.Add(comboBoxGhosts2);
-            Controls.Add(comboBoxGhosts1);
             Controls.Add(labelRelays);
             Controls.Add(buttonRelayList);
             Controls.Add(buttonSetting);
@@ -202,9 +146,5 @@
         private Button buttonRelayList;
         private Label labelRelays;
         private ToolTip toolTipRelays;
-        private ComboBox comboBoxGhosts1;
-        private ComboBox comboBoxGhosts2;
-        internal TextBox textBoxGhostNpub1;
-        internal TextBox textBoxGhostNpub2;
     }
 }
