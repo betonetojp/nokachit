@@ -1,5 +1,6 @@
 ﻿using SSTPLib;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace nokachit
 {
