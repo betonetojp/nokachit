@@ -517,7 +517,7 @@ namespace nokachit
             _formSetting.trackBarOpacity.Value = (int)(Opacity * 100);
             _formSetting.checkBoxShowOnlyFollowees.Checked = _showOnlyFollowees;
             _formSetting.textBoxNpub.Text = _npub;
-            _formSetting.textBoxPreferredGhost.Text = _ghostName;
+            _formSetting._mainGhost = _ghostName;
             _formSetting.checkBoxSoleGhostsOnly.Checked = _soleGhostsOnly;
 
             // ŠJ‚­
@@ -543,7 +543,7 @@ namespace nokachit
             }
             Opacity = _formSetting.trackBarOpacity.Value / 100.0;
             _showOnlyFollowees = _formSetting.checkBoxShowOnlyFollowees.Checked;
-            _ghostName = _formSetting.textBoxPreferredGhost.Text;
+            _ghostName = _formSetting._mainGhost;
             _npub = _formSetting.textBoxNpub.Text;
             _soleGhostsOnly = _formSetting.checkBoxSoleGhostsOnly.Checked;
             try
@@ -796,61 +796,9 @@ namespace nokachit
         }
         #endregion
 
-        private static void SearchGhost(ComboBox comboBox, string? ghost)
-        {
-            comboBox.Items.Clear();
-            SakuraFMO fmo = new("SakuraUnicode");
-            fmo.Update(true);
-            string[] names = fmo.GetGhostNames();
-            if (names.Length > 0)
-            {
-                comboBox.Items.AddRange(names);
-                comboBox.SelectedIndex = 0;
-                if (!string.IsNullOrEmpty(ghost))
-                {
-                    comboBox.SelectedItem = ghost;
-                }
-            }
-        }
-
         private void RefleshGhosts()
         {
             _soleGhosts = Tools.LoadSoleGhosts();
-            if (_soleGhosts.Count < 2)
-            {
-                while (_soleGhosts.Count < 2)
-                {
-                    _soleGhosts.Add(new SoleGhost());
-                }
-            }
-            textBoxGhostNpub1.Text = _soleGhosts[0].Npub;
-            SearchGhost(comboBoxGhosts1, _soleGhosts[0].GhostName);
-            textBoxGhostNpub2.Text = _soleGhosts[1].Npub;
-            SearchGhost(comboBoxGhosts2, _soleGhosts[1].GhostName);
-        }
-
-        private void TextBoxGhostNpub1_TextChanged(object sender, EventArgs e)
-        {
-            _soleGhosts[0].Npub = textBoxGhostNpub1.Text;
-            Tools.SaveSoleGhosts(_soleGhosts);
-        }
-
-        private void TextBoxGhostNpub2_TextChanged(object sender, EventArgs e)
-        {
-            _soleGhosts[1].Npub = textBoxGhostNpub2.Text;
-            Tools.SaveSoleGhosts(_soleGhosts);
-        }
-
-        private void ComboBoxGhosts1_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            _soleGhosts[0].GhostName = comboBoxGhosts1.Text;
-            Tools.SaveSoleGhosts(_soleGhosts);
-        }
-
-        private void ComboBoxGhosts2_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            _soleGhosts[1].GhostName = comboBoxGhosts2.Text;
-            Tools.SaveSoleGhosts(_soleGhosts);
         }
     }
 }
